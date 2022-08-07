@@ -14,9 +14,11 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
+        fontFamily: "Signatra",
         primarySwatch: Colors.blue,
       ),
       home: MainScreen(),
+      debugShowCheckedModeBanner: false,
     );
   }
 }

@@ -34,7 +34,10 @@ dependencies:
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
-
+  firebase_core: ^1.20.0
+  firebase_auth: ^3.6.2
+  firebase_database: ^9.1.0
+  
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -58,9 +61,18 @@ flutter:
   uses-material-design: true
 
   # To add assets to your application, add an assets section, like this:
-  # assets:
-  #   - images/a_dot_burr.jpeg
-  #   - images/a_dot_ham.jpeg
+  assets:
+     - images/car_android.png
+     - images/car_ios.png
+     - images/desticon.png
+     - images/desticon1.png
+     - images/logo.png
+     - images/logo1.png
+     - images/pickicon.png
+     - images/posimarker.png
+     - images/redmarker.png
+     - images/taxi.png
+     - images/user_icon.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
@@ -73,10 +85,16 @@ flutter:
   # "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
   # example:
-  # fonts:
-  #   - family: Schyler
-  #     fonts:
-  #       - asset: fonts/Schyler-Regular.ttf
+  fonts:
+    - family: Signatra
+      fonts:
+        - asset: fonts/Signatra.ttf
+    - family: Bolt-Regular
+      fonts:
+        - asset: fonts/bolt-regular.ttf
+    - family: Brand Bold
+      fonts:
+        - asset: fonts/bolt-semibold.ttf
   #       - asset: fonts/Schyler-Italic.ttf
   #         style: italic
   #   - family: Trajan Pro

@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "721859279849",
+    "project_id": "fiacre-b9f92",
+    "storage_bucket": "fiacre-b9f92.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:721859279849:android:9153519d7a498153af6978",
+        "android_client_info": {
+          "package_name": "com.mathabathetokelo.fiacre.riderapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "721859279849-6kaaiern06j1hi24opfid6816009fi97.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAqNTyL2pxuryBOnkNApWU257me8961uKQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "721859279849-6kaaiern06j1hi24opfid6816009fi97.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
