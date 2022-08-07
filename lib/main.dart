@@ -1,3 +1,4 @@
+import 'package:final_year_project_rider_app/Screens/loginscreen.dart';
 import 'package:final_year_project_rider_app/Screens/mainscreen.dart';
 import 'package:flutter/material.dart';
 
@@ -12,12 +13,12 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Fiacre Rider App',
       theme: ThemeData(
         fontFamily: "Signatra",
         primarySwatch: Colors.blue,
       ),
-      home: MainScreen(),
+      home: LoginScreen(),
       debugShowCheckedModeBanner: false,
     );
   }
