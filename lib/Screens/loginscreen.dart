@@ -6,12 +6,10 @@ class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.white,
-        body: Column(children: [
-          SizedBox(
-            height: 1.0,
-          ),
-          Image(
+      backgroundColor: Colors.white,
+      body: Column(
+        children: [
+          const Image(
             image: AssetImage("images/logo.png"),
             width: 700.0,
             height: 200.0,
@@ -29,36 +27,43 @@ class LoginScreen extends StatelessWidget {
             height: 1.0,
           ),
           Padding(
-              padding: EdgeInsets.all(20.0),
-              child: Column(children: [
+            padding: EdgeInsets.all(20.0),
+            child: Column(
+              children: [
                 TextFormField(
                   keyboardType: TextInputType.emailAddress,
                   decoration: InputDecoration(
-                      labelText: "Email",
-                      labelStyle: TextStyle(
-                        fontSize: 14.0,
-                      ),
-                      hintStyle: TextStyle(
-                        color: Colors.grey,
-                        fontSize: 10.0,
-                      )),
+                    labelText: "Email",
+                    labelStyle: TextStyle(
+                      fontSize: 14.0,
+                    ),
+                    hintStyle: TextStyle(
+                      color: Colors.grey,
+                      fontSize: 10.0,
+                    ),
+                  ),
                   style: TextStyle(fontSize: 14.0),
                 ),
                 TextFormField(
                   obscureText: true,
                   keyboardType: TextInputType.emailAddress,
                   decoration: InputDecoration(
-                      labelText: "Password",
-                      labelStyle: TextStyle(
-                        fontSize: 14.0,
-                      ),
-                      hintStyle: TextStyle(
-                        color: Colors.grey,
-                        fontSize: 10.0,
-                      )),
+                    labelText: "Password",
+                    labelStyle: TextStyle(
+                      fontSize: 14.0,
+                    ),
+                    hintStyle: TextStyle(
+                      color: Colors.grey,
+                      fontSize: 10.0,
+                    ),
+                  ),
                   style: TextStyle(fontSize: 14.0),
                 ),
-              ])),
-        ]));
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }
