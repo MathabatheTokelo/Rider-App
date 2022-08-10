@@ -1,8 +1,8 @@
-import 'package:final_year_project_rider_app/Screens/RegistrationScreen.dart';
+import 'package:final_year_project_rider_app/Screens/loginscreen.dart';
 import 'package:flutter/material.dart';
 
-class LoginScreen extends StatelessWidget {
-  const LoginScreen({Key? key}) : super(key: key);
+class RegistrationScreenn extends StatelessWidget {
+  const RegistrationScreenn({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +23,7 @@ class LoginScreen extends StatelessWidget {
                 height: 1.0,
               ),
               Text(
-                "Login as a Rider",
+                "Sign Up as a Rider",
                 style: TextStyle(fontSize: 25.0, fontFamily: "Brand Bold"),
                 textAlign: TextAlign.left,
               ),
@@ -34,6 +34,30 @@ class LoginScreen extends StatelessWidget {
                 padding: EdgeInsets.all(20.0),
                 child: Column(
                   children: [
+                    TextFormField(
+                      keyboardType: TextInputType.text,
+                      decoration: InputDecoration(
+                        labelText: "Name",
+                        labelStyle:
+                            TextStyle(fontSize: 14.0, fontFamily: "Brand Bold"),
+                        hintStyle: TextStyle(
+                          color: Colors.grey,
+                          fontSize: 10.0,
+                        ),
+                      ),
+                    ),
+                    TextFormField(
+                      keyboardType: TextInputType.phone,
+                      decoration: InputDecoration(
+                        labelText: "Phone",
+                        labelStyle:
+                            TextStyle(fontSize: 14.0, fontFamily: "Brand Bold"),
+                        hintStyle: TextStyle(
+                          color: Colors.grey,
+                          fontSize: 10.0,
+                        ),
+                      ),
+                    ),
                     TextFormField(
                       keyboardType: TextInputType.emailAddress,
                       decoration: InputDecoration(
@@ -72,7 +96,7 @@ class LoginScreen extends StatelessWidget {
                           height: 50,
                           child: Center(
                             child: Text(
-                              "Login",
+                              "Create Account",
                               style: TextStyle(
                                   fontSize: 18.0, fontFamily: "Brand Bold"),
                             ),
@@ -91,10 +115,10 @@ class LoginScreen extends StatelessWidget {
               FlatButton(
                   onPressed: () {
                     print("clicked");
-                    RegistrationScreenn();
+                    LoginScreen();
                   },
                   child: Text(
-                    "Don't have an Account yet? Register Here.",
+                    "Already have an Account yet? Sign In",
                     style: TextStyle(fontSize: 15.0, fontFamily: "Brand Bold"),
                   ))
             ],

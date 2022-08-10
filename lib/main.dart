@@ -1,9 +1,12 @@
 import 'package:final_year_project_rider_app/Screens/loginscreen.dart';
 import 'package:final_year_project_rider_app/Screens/mainscreen.dart';
+import 'package:final_year_project_rider_app/Screens/registrationscreen.dart';
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(
+    const MyApp(),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -17,6 +20,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         fontFamily: "Signatra",
         primarySwatch: Colors.blue,
+        visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       home: LoginScreen(),
       debugShowCheckedModeBanner: false,
