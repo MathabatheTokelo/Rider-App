@@ -1,7 +1,9 @@
 import 'package:final_year_project_rider_app/Screens/RegistrationScreen.dart';
+import 'package:final_year_project_rider_app/Screens/registrationscreen.dart';
 import 'package:flutter/material.dart';
 
 class LoginScreen extends StatelessWidget {
+  static const String idScreen = "login";
   const LoginScreen({Key? key}) : super(key: key);
 
   @override
@@ -90,8 +92,8 @@ class LoginScreen extends StatelessWidget {
               SizedBox(height: 1.0),
               FlatButton(
                   onPressed: () {
-                    print("clicked");
-                    RegistrationScreenn();
+                    Navigator.pushNamedAndRemoveUntil(context,
+                        RegistrationScreenn.idScreen, (route) => false);
                   },
                   child: Text(
                     "Don't have an Account yet? Register Here.",

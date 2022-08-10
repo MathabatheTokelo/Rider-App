@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 class RegistrationScreenn extends StatelessWidget {
   const RegistrationScreenn({Key? key}) : super(key: key);
-
+  static const String idScreen = "register";
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -14,7 +14,7 @@ class RegistrationScreenn extends StatelessWidget {
           child: Column(
             children: [
               const Image(
-                image: AssetImage("images/logo.png"),
+                image: AssetImage("images/logo1.png"),
                 width: 500.0,
                 height: 163.0,
                 alignment: Alignment.center,
@@ -115,7 +115,8 @@ class RegistrationScreenn extends StatelessWidget {
               FlatButton(
                   onPressed: () {
                     print("clicked");
-                    LoginScreen();
+                    Navigator.pushNamedAndRemoveUntil(
+                        context, LoginScreen.idScreen, (route) => false);
                   },
                   child: Text(
                     "Already have an Account yet? Sign In",
