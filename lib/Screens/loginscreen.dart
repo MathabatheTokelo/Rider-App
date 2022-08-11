@@ -1,5 +1,5 @@
 import 'package:final_year_project_rider_app/Screens/RegistrationScreen.dart';
-import 'package:final_year_project_rider_app/Screens/registrationscreen.dart';
+import 'package:final_year_project_rider_app/Screens/mainscreen.dart';
 import 'package:flutter/material.dart';
 
 class LoginScreen extends StatelessWidget {
@@ -64,7 +64,8 @@ class LoginScreen extends StatelessWidget {
                           fontSize: 10.0,
                         ),
                       ),
-                      style: TextStyle(fontSize: .0, fontFamily: "Brand Bold"),
+                      style:
+                          TextStyle(fontSize: 14.0, fontFamily: "Brand Bold"),
                     ),
                     SizedBox(height: 10.0),
                     RaisedButton(
@@ -92,6 +93,7 @@ class LoginScreen extends StatelessWidget {
               SizedBox(height: 1.0),
               FlatButton(
                   onPressed: () {
+                    print("clicked");
                     Navigator.pushNamedAndRemoveUntil(context,
                         RegistrationScreenn.idScreen, (route) => false);
                   },

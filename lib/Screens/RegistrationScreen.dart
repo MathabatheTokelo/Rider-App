@@ -1,4 +1,5 @@
 import 'package:final_year_project_rider_app/Screens/loginscreen.dart';
+import 'package:final_year_project_rider_app/Screens/mainscreen.dart';
 import 'package:flutter/material.dart';
 
 class RegistrationScreenn extends StatelessWidget {
@@ -35,16 +36,19 @@ class RegistrationScreenn extends StatelessWidget {
                 child: Column(
                   children: [
                     TextFormField(
-                      keyboardType: TextInputType.text,
+                      keyboardType: TextInputType.emailAddress,
                       decoration: InputDecoration(
                         labelText: "Name",
-                        labelStyle:
-                            TextStyle(fontSize: 14.0, fontFamily: "Brand Bold"),
+                        labelStyle: TextStyle(
+                          fontSize: 14.0,
+                        ),
                         hintStyle: TextStyle(
                           color: Colors.grey,
                           fontSize: 10.0,
                         ),
                       ),
+                      style:
+                          TextStyle(fontSize: 14.0, fontFamily: "Brand Bold"),
                     ),
                     TextFormField(
                       keyboardType: TextInputType.phone,
@@ -55,6 +59,7 @@ class RegistrationScreenn extends StatelessWidget {
                         hintStyle: TextStyle(
                           color: Colors.grey,
                           fontSize: 10.0,
+                          fontFamily: "Brand Bold",
                         ),
                       ),
                     ),
@@ -75,7 +80,7 @@ class RegistrationScreenn extends StatelessWidget {
                     ),
                     TextFormField(
                       obscureText: true,
-                      keyboardType: TextInputType.emailAddress,
+                      keyboardType: TextInputType.visiblePassword,
                       decoration: InputDecoration(
                         labelText: "Password",
                         labelStyle: TextStyle(
@@ -86,7 +91,8 @@ class RegistrationScreenn extends StatelessWidget {
                           fontSize: 10.0,
                         ),
                       ),
-                      style: TextStyle(fontSize: .0, fontFamily: "Brand Bold"),
+                      style:
+                          TextStyle(fontSize: 14.0, fontFamily: "Brand Bold"),
                     ),
                     SizedBox(height: 10.0),
                     RaisedButton(
