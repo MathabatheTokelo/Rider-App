@@ -1,13 +1,18 @@
 import 'package:final_year_project_rider_app/Screens/loginscreen.dart';
 import 'package:final_year_project_rider_app/Screens/mainscreen.dart';
 import 'package:final_year_project_rider_app/Screens/registrationscreen.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 
-void main() {
-  runApp(
-    const MyApp(),
-  );
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  runApp(MyApp());
 }
+
+DatabaseReference usersRef =
+    FirebaseDatabase.instance.reference().child("users");
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
