@@ -22,7 +22,7 @@ class _MainScreen extends State<MainScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Main Screen")),
+      appBar: AppBar(title: const Text("Fiacre")),
       body: Stack(
         children: [
           GoogleMap(

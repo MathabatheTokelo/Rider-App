@@ -23,8 +23,8 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Fiacre Rider App',
       theme: ThemeData(
-        fontFamily: "Signatra",
-        primarySwatch: Colors.blue,
+        fontFamily: "Border Bold",
+        primarySwatch: Colors.blueGrey,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       initialRoute: LoginScreen.idScreen,
