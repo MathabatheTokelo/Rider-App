@@ -185,7 +185,7 @@ class RegistrationScreenn extends StatelessWidget {
         "name": nameTextEditingController.text.trim(),
         "email": emailTextEditingController.text.trim(),
         "phone": phoneTextEditingController.text.trim(),
-        "password": passwordTextEditingController,
+        "password": passwordTextEditingController.text,
       };
       usersRef.child(firebaseUser.uid).set(userDataMap);
       displayToastMessage("You account was Successfully created", context);
