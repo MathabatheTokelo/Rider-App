@@ -5,6 +5,7 @@ import 'package:final_year_project_rider_app/main.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class LoginScreen extends StatelessWidget {
   static const String idScreen = "login";
@@ -102,8 +103,8 @@ class LoginScreen extends StatelessWidget {
                                 "Password cannot be empty", context);
                           } else {
                             loginAndAuthicateUser(context);
+                            MainScreen();
                           }
-                          loginAndAuthicateUser(context);
                         }),
                   ],
                 ),
@@ -150,21 +151,18 @@ class LoginScreen extends StatelessWidget {
     if (firebaseUser != null) {
       //check user from database
       //remove value
-      usersRef
-          .child(firebaseUser.uid)
-          .once()
-          .then((value) => (DataSnapshot snap) {
-                if (snap.value != null) {
-                  Navigator.pushNamedAndRemoveUntil(
-                      context, MainScreen.idScreen, (route) => false);
-                  displayToastMessage("You are Logged-In :-)", context);
-                } else {
-                  Navigator.pop(context);
-                  _firebaseAuth.signOut();
-                  displayToastMessage(
-                      "User does not exist, Create new account", context);
-                }
-              });
+      usersRef.child(firebaseUser.uid).once().then((DatabaseEvent snap) {
+        if (snap.snapshot != null) {
+          Navigator.pushNamedAndRemoveUntil(
+              context, MainScreen.idScreen, (route) => false);
+          displayToastMessage("You are Logged-In :-)", context);
+        } else {
+          Navigator.pop(context);
+          _firebaseAuth.signOut();
+          displayToastMessage(
+              "User does not exist, Create new account", context);
+        }
+      });
     } else {
       Navigator.pop(context);
       displayToastMessage("Error Occured, Can't be Signed-In.", context);
