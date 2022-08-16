@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:final_year_project_rider_app/Assistants/assistantMethods.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -31,6 +32,9 @@ class _MainScreen extends State<MainScreen> {
         new CameraPosition(target: latLngPosition, zoom: 14);
     newGoogleMapController
         .animateCamera(CameraUpdate.newCameraPosition(cameraPosition));
+
+    String address = await AssistantMethods.searchCoordinateAddress(position);
+    print("This is your Address :: " + address);
   }
 
   static final CameraPosition _kGooglePlex = CameraPosition(

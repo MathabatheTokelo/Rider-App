@@ -1,7 +1,8 @@
 import 'package:final_year_project_rider_app/Assistants/request_assistant.dart';
+import 'package:final_year_project_rider_app/DataHandler/Models/address.dart';
 import 'package:geolocator/geolocator.dart';
 
-class AssistantMethods {
+class AssistantMethods {git remote set-url origin git://new.url.here
   static Future<String> searchCoordinateAddress(Position position) async {
     String placeAddres = "";
     String url =
@@ -9,6 +10,8 @@ class AssistantMethods {
     var response = await RequestAssistant.getRequest(url);
     if (response != "Failed.") {
       placeAddres = response["results"][0]["formatted_address"];
+
+      Address userPickUpAddress = new Address();
     }
     return placeAddres;
   }
