@@ -1,9 +1,13 @@
+// ignore_for_file: unnecessary_null_comparison
+
 import 'dart:async';
 
 import 'package:final_year_project_rider_app/Assistants/assistantMethods.dart';
+import 'package:final_year_project_rider_app/DataHandler/appData.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:provider/provider.dart';
 
 class MainScreen extends StatefulWidget {
   static const String idScreen = "mainScreen";
@@ -33,7 +37,8 @@ class _MainScreen extends State<MainScreen> {
     newGoogleMapController
         .animateCamera(CameraUpdate.newCameraPosition(cameraPosition));
 
-    String address = await AssistantMethods.searchCoordinateAddress(position);
+    String address =
+        await AssistantMethods.searchCoordinateAddress(position, context);
     print("This is your Address :: " + address);
   }
 
@@ -239,11 +244,16 @@ class _MainScreen extends State<MainScreen> {
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text("Add Home"),
-                            SizedBox(
+                            Text(Provider.of<AppData>(context).pickUpLocation !=
+                                    null
+                                ? Provider.of<AppData>(context)
+                                    .pickUpLocation
+                                    .placeName
+                                : "Add Home"),
+                            const SizedBox(
                               height: 4.0,
                             ),
-                            Text(
+                            const Text(
                               "Your living home address",
                               style: TextStyle(
                                   color: Colors.black54, fontSize: 12.0),
@@ -254,16 +264,16 @@ class _MainScreen extends State<MainScreen> {
                     ),
                     SizedBox(height: 10.0),
                     Divider(),
-                    SizedBox(height: 16.0),
+                    const SizedBox(height: 16.0),
                     Row(
                       children: [
                         Icon(Icons.work, color: Colors.grey),
-                        SizedBox(
+                        const SizedBox(
                           width: 12.0,
                         ),
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
+                          children: const [
                             Text("Add Work"),
                             SizedBox(
                               height: 4.0,
