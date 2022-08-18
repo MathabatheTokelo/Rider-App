@@ -1,9 +1,7 @@
-// ignore_for_file: unnecessary_null_comparison
-
 import 'dart:async';
-
 import 'package:final_year_project_rider_app/Assistants/assistantMethods.dart';
 import 'package:final_year_project_rider_app/DataHandler/appData.dart';
+import 'package:final_year_project_rider_app/Screens/searchScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -209,29 +207,42 @@ class _MainScreen extends State<MainScreen> {
                     SizedBox(
                       height: 20.0,
                     ),
-                    Container(
-                      height: 50.0,
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(5.0),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black54,
-                            blurRadius: 6.0,
-                            spreadRadius: 0.5,
-                            offset: Offset(0.7, 0.7),
-                          )
-                        ],
-                      ),
-                      child: Row(
-                        children: [
-                          Icon(
-                            Icons.search,
-                            color: Colors.blueGrey,
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => SearchScreen(),
                           ),
-                          SizedBox(width: 10.0),
-                          Text("Search Drop Off"),
-                        ],
+                        );
+                      },
+                      child: Container(
+                        height: 50.0,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(5.0),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black54,
+                              blurRadius: 6.0,
+                              spreadRadius: 0.5,
+                              offset: Offset(0.7, 0.7),
+                            )
+                          ],
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(12.0),
+                          child: Row(
+                            children: [
+                              Icon(
+                                Icons.search,
+                                color: Colors.blueGrey,
+                              ),
+                              SizedBox(width: 10.0),
+                              Text("Search Drop Off"),
+                            ],
+                          ),
+                        ),
                       ),
                     ),
                     SizedBox(height: 24.0),
@@ -248,7 +259,7 @@ class _MainScreen extends State<MainScreen> {
                                     null
                                 ? Provider.of<AppData>(context)
                                     .pickUpLocation
-                                    .placeName
+                                    ?.placeName
                                 : "Add Home"),
                             const SizedBox(
                               height: 4.0,
