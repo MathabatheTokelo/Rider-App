@@ -1,4 +1,5 @@
 import 'package:final_year_project_rider_app/Assistants/request_assistant.dart';
+import 'package:final_year_project_rider_app/DataHandler/Models/placePredictions.dart';
 import 'package:final_year_project_rider_app/DataHandler/appData.dart';
 import 'package:final_year_project_rider_app/Screens/mainscreen.dart';
 import 'package:final_year_project_rider_app/configMaps.dart';
@@ -16,6 +17,7 @@ class SearchScreen extends StatefulWidget {
 class _SearchScreenState extends State<SearchScreen> {
   TextEditingController pickUpTextEditingController = TextEditingController();
   TextEditingController dropOffTextEditingController = TextEditingController();
+  List<PlacePredictions> placePredictionList = [];
 
   @override
   Widget build(BuildContext context) {
@@ -134,6 +136,8 @@ class _SearchScreenState extends State<SearchScreen> {
               ),
             ),
           )
+
+          //
         ],
       ),
     );
@@ -142,14 +146,63 @@ class _SearchScreenState extends State<SearchScreen> {
   void findPlace(String placeName) async {
     if (placeName.length > 1) {
       String autoCompleteUrl =
-          "https://maps.googleapis.com/maps/api/place/autocomplete/json?input=$placeName&key=$mapKey&sessiontoken=";
+          "https://maps.googleapis.com/maps/api/place/autocomplete/json?input=$placeName&key=$mapKey&sessiontoken=&components=country:za";
       var res = await RequestAssistant.getRequest(autoCompleteUrl);
 
       if (res == "failed") {
         return;
       }
-      print("Places Predictions Response ::");
-      print(res);
+      if (res["status"] == "OK") {
+        var predictions = res["predictions"];
+
+        var placeList = (predictions as List)
+            .map((e) => PlacePredictions.fromJson(e))
+            .toList();
+        placePredictionList = placeList;
+      }
     }
+  }
+}
+
+class PredictionTile extends StatelessWidget {
+  final PlacePredictions placePredictions;
+  const PredictionTile({Key? key, required this.placePredictions})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: Column(
+        children: [
+          SizedBox(width: 10.0),
+          Row(children: [
+            Icon(Icons.add_location),
+            SizedBox(
+              width: 14.0,
+            ),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    placePredictions.main_text,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(fontSize: 16.0),
+                  ),
+                  SizedBox(
+                    height: 3.0,
+                  ),
+                  Text(
+                    placePredictions.secondary_text,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(fontSize: 12.0, color: Colors.grey),
+                  ),
+                ],
+              ),
+            )
+          ]),
+        ],
+      ),
+    );
   }
 }
