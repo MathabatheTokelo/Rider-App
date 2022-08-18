@@ -2,6 +2,7 @@ import 'package:final_year_project_rider_app/Assistants/request_assistant.dart';
 import 'package:final_year_project_rider_app/DataHandler/Models/placePredictions.dart';
 import 'package:final_year_project_rider_app/DataHandler/appData.dart';
 import 'package:final_year_project_rider_app/Screens/mainscreen.dart';
+import 'package:final_year_project_rider_app/Widgets/divider.dart';
 import 'package:final_year_project_rider_app/configMaps.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -135,9 +136,29 @@ class _SearchScreenState extends State<SearchScreen> {
                 ],
               ),
             ),
-          )
+          ),
 
           //
+          SizedBox(height: 10.0),
+          (placePredictionList.length > 0)
+              ? Padding(
+                  padding:
+                      EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+                  child: ListView.separated(
+                    padding: EdgeInsets.all(0.0),
+                    itemBuilder: (context, index) {
+                      return PredictionTile(
+                        placePredictions: placePredictionList[index],
+                      );
+                    },
+                    separatorBuilder: (BuildContext context, int index) =>
+                        DividerWidget(),
+                    itemCount: placePredictionList.length,
+                    shrinkWrap: true,
+                    physics: ClampingScrollPhysics(),
+                  ),
+                )
+              : Container(),
         ],
       ),
     );
@@ -184,23 +205,24 @@ class PredictionTile extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  SizedBox(height: 8.0),
                   Text(
                     placePredictions.main_text,
                     overflow: TextOverflow.ellipsis,
                     style: TextStyle(fontSize: 16.0),
                   ),
-                  SizedBox(
-                    height: 3.0,
-                  ),
+                  SizedBox(height: 2.0),
                   Text(
                     placePredictions.secondary_text,
                     overflow: TextOverflow.ellipsis,
                     style: TextStyle(fontSize: 12.0, color: Colors.grey),
                   ),
+                  SizedBox(height: 8.0),
                 ],
               ),
             )
           ]),
+          SizedBox(width: 10.0),
         ],
       ),
     );
