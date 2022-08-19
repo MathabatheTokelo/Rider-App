@@ -1,8 +1,10 @@
 import 'package:final_year_project_rider_app/Assistants/request_assistant.dart';
+import 'package:final_year_project_rider_app/DataHandler/Models/address.dart';
 import 'package:final_year_project_rider_app/DataHandler/Models/placePredictions.dart';
 import 'package:final_year_project_rider_app/DataHandler/appData.dart';
 import 'package:final_year_project_rider_app/Screens/mainscreen.dart';
 import 'package:final_year_project_rider_app/Widgets/divider.dart';
+import 'package:final_year_project_rider_app/Widgets/progressDialog.dart';
 import 'package:final_year_project_rider_app/configMaps.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -29,7 +31,7 @@ class _SearchScreenState extends State<SearchScreen> {
       body: Column(
         children: [
           Container(
-            height: 215.0,
+            height: 190.0,
             decoration: BoxDecoration(color: Colors.white, boxShadow: [
               BoxShadow(
                 color: Colors.black,
@@ -50,17 +52,19 @@ class _SearchScreenState extends State<SearchScreen> {
                           onTap: () {
                             Navigator.pop(context);
                           },
-                          child: Icon(Icons.arrow_back)),
+                          child: Icon(
+                            Icons.arrow_back,
+                          )),
                       Center(
                         child: Text(
-                          "Set Frop Off",
+                          "Set Drop Off",
                           style: TextStyle(
-                              fontSize: 18.0, fontFamily: "Brand-Bold"),
+                              fontSize: 20.0, fontFamily: "Brand-Bold"),
                         ),
                       )
                     ],
                   ),
-                  SizedBox(height: 16.0),
+                  SizedBox(height: 15.0),
                   Row(
                     children: [
                       Image.asset(
@@ -139,11 +143,11 @@ class _SearchScreenState extends State<SearchScreen> {
           ),
 
           //
-          SizedBox(height: 10.0),
+          SizedBox(height: 2.0),
           (placePredictionList.length > 0)
               ? Padding(
                   padding:
-                      EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+                      EdgeInsets.symmetric(vertical: 1.0, horizontal: 16.0),
                   child: ListView.separated(
                     padding: EdgeInsets.all(0.0),
                     itemBuilder: (context, index) {
@@ -167,7 +171,7 @@ class _SearchScreenState extends State<SearchScreen> {
   void findPlace(String placeName) async {
     if (placeName.length > 1) {
       String autoCompleteUrl =
-          "https://maps.googleapis.com/maps/api/place/autocomplete/json?input=$placeName&key=$mapKey&sessiontoken=&components=country:za";
+          "https://maps.googleapis.com/maps/api/place/autocomplete/json?input=$placeName&key=$mapKey&components=country:za";
       var res = await RequestAssistant.getRequest(autoCompleteUrl);
 
       if (res == "failed") {
@@ -192,39 +196,71 @@ class PredictionTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Column(
-        children: [
-          SizedBox(width: 10.0),
-          Row(children: [
-            Icon(Icons.add_location),
-            SizedBox(
-              width: 14.0,
-            ),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SizedBox(height: 8.0),
-                  Text(
-                    placePredictions.main_text,
-                    overflow: TextOverflow.ellipsis,
-                    style: TextStyle(fontSize: 16.0),
-                  ),
-                  SizedBox(height: 2.0),
-                  Text(
-                    placePredictions.secondary_text,
-                    overflow: TextOverflow.ellipsis,
-                    style: TextStyle(fontSize: 12.0, color: Colors.grey),
-                  ),
-                  SizedBox(height: 8.0),
-                ],
+    return FlatButton(
+      padding: EdgeInsets.all(0.0),
+      onPressed: () {
+        getPlaceAddressDetails(placePredictions.place_id, context);
+      },
+      child: Container(
+        child: Column(
+          children: [
+            SizedBox(width: 10.0),
+            Row(children: [
+              Icon(Icons.add_location),
+              SizedBox(
+                width: 14.0,
               ),
-            )
-          ]),
-          SizedBox(width: 10.0),
-        ],
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(height: 8.0),
+                    Text(
+                      placePredictions.main_text,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(fontSize: 16.0),
+                    ),
+                    SizedBox(height: 2.0),
+                    Text(
+                      placePredictions.secondary_text,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(fontSize: 12.0, color: Colors.grey),
+                    ),
+                    SizedBox(height: 8.0),
+                  ],
+                ),
+              )
+            ]),
+            SizedBox(width: 10.0),
+          ],
+        ),
       ),
     );
+  }
+
+  void getPlaceAddressDetails(String placeId, context) async {
+    showDialog(
+        context: context,
+        builder: (BuildContext) => ProgressDialog(
+              message: "Setting Drop-Off, Please wait..",
+            ));
+    String placeDetailsUrl =
+        "https://maps.googleapis.com/maps/api/place/details/json?place_id=$placeId&key=$mapKey";
+    var res = await RequestAssistant.getRequest(placeDetailsUrl);
+    Navigator.pop(context);
+    if (res == "failed") {
+      return;
+    }
+    if (res["status"] == "OK") {
+      Address address = Address();
+      address.placeName = res["result"]["name"];
+      address.placeId = placeId;
+      address.latitude = res["result"]["geometry"]["location"]["lat"];
+      address.longitude = res["result"]["geometry"]["location"]["lng"];
+      Provider.of<AppData>(context, listen: false)
+          .updateDropOffLocationAddress(address);
+      print("This is drop off location :: ");
+      print(address.placeName);
+    }
   }
 }
