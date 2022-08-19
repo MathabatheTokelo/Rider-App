@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:final_year_project_rider_app/Assistants/assistantMethods.dart';
 import 'package:final_year_project_rider_app/DataHandler/appData.dart';
 import 'package:final_year_project_rider_app/Screens/searchScreen.dart';
+import 'package:final_year_project_rider_app/Widgets/progressDialog.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -208,13 +209,16 @@ class _MainScreen extends State<MainScreen> {
                       height: 20.0,
                     ),
                     GestureDetector(
-                      onTap: () {
-                        Navigator.push(
+                      onTap: () async {
+                        var res = await Navigator.push(
                           context,
                           MaterialPageRoute(
                             builder: (context) => SearchScreen(),
                           ),
                         );
+                        if (res == "obtainDirection") {
+                          await getPlaceDirection();
+                        }
                       },
                       child: Container(
                         height: 50.0,
@@ -306,5 +310,24 @@ class _MainScreen extends State<MainScreen> {
         ],
       ),
     );
+  }
+
+  Future<void> getPlaceDirection() async {
+    var initialPos =
+        Provider.of<AppData>(context, listen: false).pickUpLocation;
+    var finalPos = Provider.of<AppData>(context, listen: false).dropOffLocation;
+    var pickUpLatLng = LatLng(initialPos!.latitude, initialPos.longitude);
+    var dropOffLatLng = LatLng(finalPos!.latitude, finalPos.longitude);
+
+    showDialog(
+        context: context,
+        builder: (BuildContext context) => ProgressDialog(
+              message: "Please wait..",
+            ));
+    var details = await AssistantMethods.obtainPlaceDirectionDetails(
+        pickUpLatLng, dropOffLatLng);
+    Navigator.pop(context);
+    print("THis is encoded Points :: ");
+    print(details!.encodedPoints);
   }
 }
