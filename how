@@ -1,0 +1,173 @@
+[33mcommit 4056cdbd1abc289b51cc1a92e8d4c25218502311[m[33m ([m[1;36mHEAD -> [m[1;32mmaster[m[33m)[m
+Author: Tokelo Mathabathe <Mathabathetokelo75@gmail.com>
+Date:   Fri Aug 19 17:08:11 2022 +0200
+
+    pickUp-to-dropOff using google direction Api
+
+[33mcommit 56d7a214a441ba97b857637f14ce10b89a87da6f[m
+Author: Tokelo Mathabathe <Mathabathetokelo75@gmail.com>
+Date:   Fri Aug 19 15:59:03 2022 +0200
+
+    get drop-off  place details
+
+[33mcommit b851bb00d35d1f60db19e6e1fb7038a042fc7066[m
+Author: Tokelo Mathabathe <Mathabathetokelo75@gmail.com>
+Date:   Thu Aug 18 16:58:22 2022 +0200
+
+    Display place Prediction in a list fixed
+
+[33mcommit c1f15a543da4f21959b52d9b14096e51656db133[m
+Author: Tokelo Mathabathe <Mathabathetokelo75@gmail.com>
+Date:   Thu Aug 18 16:32:09 2022 +0200
+
+    Display place Prediction in a list
+
+[33mcommit 9c63b449fde4c44e186b813ff274e95f7e61275f[m
+Author: Tokelo Mathabathe <Mathabathetokelo75@gmail.com>
+Date:   Thu Aug 18 15:47:29 2022 +0200
+
+    Enabled google places api - auto complete search
+
+[33mcommit b22ddb5227a3b86ea832e6a759e689bab829c94a[m
+Author: Tokelo Mathabathe <Mathabathetokelo75@gmail.com>
+Date:   Thu Aug 18 15:13:48 2022 +0200
+
+    Search and create destination
+
+[33mcommit e48253b329fe2ee598bb5effe9bc8868a4912672[m
+Author: Tokelo Mathabathe <Mathabathetokelo75@gmail.com>
+Date:   Wed Aug 17 16:36:46 2022 +0200
+
+    done setting data provider class and currentLocation address
+
+[33mcommit ba99d42839bd7a48f13da41e974d28ccc2a39876[m
+Author: Tokelo Mathabathe <Mathabathetokelo75@gmail.com>
+Date:   Tue Aug 16 17:08:24 2022 +0200
+
+    setting data provider class and currentLocation address
+
+[33mcommit 663f59d51a63d1e703f6b40cddb473c05f62a2a8[m
+Author: Tokelo Mathabathe <Mathabathetokelo75@gmail.com>
+Date:   Mon Aug 15 17:42:57 2022 +0200
+
+    reverse Geocoding and coordinates-to-address display
+
+[33mcommit b19ff31eb8adc69bfa25946c302b90367aa70052[m
+Author: Tokelo Mathabathe <Mathabathetokelo75@gmail.com>
+Date:   Mon Aug 15 14:40:34 2022 +0200
+
+    GeoCode enabled
+
+[33mcommit 795493d4badb7d65c075b2b554f01993206ce128[m
+Author: Tokelo Mathabathe <Mathabathetokelo75@gmail.com>
+Date:   Mon Aug 15 08:44:46 2022 +0200
+
+    getting user current location
+
+[33mcommit f2f030f8fdd112a42ee54d132177e5698c24f082[m
+Author: Tokelo Mathabathe <Mathabathetokelo75@gmail.com>
+Date:   Sun Aug 14 17:09:00 2022 +0200
+
+    Navigation drawer
+
+[33mcommit 805b3342fbd1ac6f279974b33172257193f3e2ad[m
+Author: Tokelo Mathabathe <Mathabathetokelo75@gmail.com>
+Date:   Sun Aug 14 14:09:56 2022 +0200
+
+    Search, Home & Work address bars added
+
+[33mcommit 0cffeb9d7d877f794ce2841d43eefeadaf63b47a[m
+Author: Tokelo Mathabathe <Mathabathetokelo75@gmail.com>
+Date:   Sat Aug 13 17:53:33 2022 +0200
+
+    Login screen authentication fixed
+
+[33mcommit dcac8635bc478255e9eaa6e4bb44fd4e3bfb3112[m
+Author: Tokelo Mathabathe <Mathabathetokelo75@gmail.com>
+Date:   Fri Aug 12 15:47:49 2022 +0200
+
+    main screen app bar fixed
+
+[33mcommit 8f3cf76ff8be80e8c52e7fc9f6f8b70e1d64df51[m
+Author: Tokelo Mathabathe <Mathabathetokelo75@gmail.com>
+Date:   Fri Aug 12 15:21:08 2022 +0200
+
+    added google maps to the main screen
+
+[33mcommit 853b88b7115e3bd74281e448264e1fd29fa375b1[m
+Author: Tokelo Mathabathe <Mathabathetokelo75@gmail.com>
+Date:   Fri Aug 12 13:24:07 2022 +0200
+
+    progress dialog bar
+
+[33mcommit 32362f8ce3249927c9112992e833e3858e5f0eca[m
+Author: Tokelo Mathabathe <Mathabathetokelo75@gmail.com>
+Date:   Fri Aug 12 11:35:19 2022 +0200
+
+    add password to the database
+
+[33mcommit f215b6af726c82084c8e419be66865891ec30ae3[m
+Author: Tokelo Mathabathe <Mathabathetokelo75@gmail.com>
+Date:   Fri Aug 12 08:48:37 2022 +0200
+
+    sign-In auth implementation
+
+[33mcommit 2e1cee9d02b690fc65d50b4fd9bc789c1fea6186[m
+Author: Tokelo Mathabathe <Mathabathetokelo75@gmail.com>
+Date:   Thu Aug 11 16:22:48 2022 +0200
+
+    firebase authintication
+
+[33mcommit b95da59f32307eb4c0e32ec1ca76827b7859c884[m
+Author: Tokelo Mathabathe <Mathabathetokelo75@gmail.com>
+Date:   Thu Aug 11 15:27:56 2022 +0200
+
+    fixed the login-to-registration route error
+
+[33mcommit 497731941676558b5cd34e8c2e485fb59643282b[m
+Author: Tokelo Mathabathe <Mathabathetokelo75@gmail.com>
+Date:   Wed Aug 10 15:54:41 2022 +0200
+
+    App navigation routing
+
+[33mcommit 74ecfb7de9bb8a8eebdb42d6c26c6f09a3baf4c6[m
+Author: Tokelo Mathabathe <Mathabathetokelo75@gmail.com>
+Date:   Wed Aug 10 15:17:49 2022 +0200
+
+    Registration and Login complete
+
+[33mcommit 44d5fc9ab4979ec8ab6acaedb88a51ffd134e1de[m
+Author: Tokelo Mathabathe <Mathabathetokelo75@gmail.com>
+Date:   Mon Aug 8 09:35:44 2022 +0200
+
+    Endentation
+
+[33mcommit bf9a4f5b3c5e2516fc16d0d0eabe54601748ef72[m
+Author: Tokelo Mathabathe <Mathabathetokelo75@gmail.com>
+Date:   Mon Aug 8 09:24:30 2022 +0200
+
+    login screen aligned correctly
+
+[33mcommit 41407c90e22e75547c7e6e3da6acdf516f604531[m
+Author: Tokelo Mathabathe <Mathabathetokelo75@gmail.com>
+Date:   Sun Aug 7 17:56:05 2022 +0200
+
+    login screen added
+
+[33mcommit ef350bef8860774713a74357295b5a51cc83fcf0[m
+Author: Tokelo Mathabathe <Mathabathetokelo75@gmail.com>
+Date:   Sun Aug 7 16:42:49 2022 +0200
+
+    added images,fonts & sounds
+
+[33mcommit 6496a3dcb88c1de654c1555bd19f20faa7b3dbe9[m
+Author: Tokelo Mathabathe <Mathabathetokelo75@gmail.com>
+Date:   Sun Aug 7 14:49:51 2022 +0200
+
+    first commit
+
+[33mcommit 868ef94fee30fc9f854569b970a60f35ed248bb7[m
+Author: Tokelo Mathabathe <Mathabathetokelo75@gmail.com>
+Date:   Sun Aug 7 14:45:50 2022 +0200
+
+    first commit

@@ -21,6 +21,9 @@ class _MainScreen extends State<MainScreen> {
   late GoogleMapController newGoogleMapController;
 
   GlobalKey<ScaffoldState> scaffoldKey = new GlobalKey<ScaffoldState>();
+
+  List<LatLng> plineCoordinates = [];
+  Set<Polyline> polylineSet = {};
   late Position currentPosition;
   var geoLocator = Geolocator();
   double bottomPaddingOfMap = 0;
@@ -328,6 +331,6 @@ class _MainScreen extends State<MainScreen> {
         pickUpLatLng, dropOffLatLng);
     Navigator.pop(context);
     print("THis is encoded Points :: ");
-    print(details!.encodedPoints);
+    print(details?.encodedPoints);
   }
 }

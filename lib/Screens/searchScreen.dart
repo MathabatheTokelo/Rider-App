@@ -218,7 +218,7 @@ class PredictionTile extends StatelessWidget {
                     Text(
                       placePredictions.main_text,
                       overflow: TextOverflow.ellipsis,
-                      style: TextStyle(fontSize: 16.0),
+                      style: TextStyle(fontSize: 14.0),
                     ),
                     SizedBox(height: 2.0),
                     Text(
@@ -226,7 +226,7 @@ class PredictionTile extends StatelessWidget {
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(fontSize: 12.0, color: Colors.grey),
                     ),
-                    SizedBox(height: 8.0),
+                    SizedBox(height: 13.0),
                   ],
                 ),
               )
@@ -261,6 +261,7 @@ class PredictionTile extends StatelessWidget {
           .updateDropOffLocationAddress(address);
       print("This is drop off location :: ");
       print(address.placeName);
+      Navigator.pop(context, "obtainDirection");
     }
   }
 }
