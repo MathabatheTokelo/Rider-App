@@ -4,6 +4,7 @@ import 'package:final_year_project_rider_app/DataHandler/appData.dart';
 import 'package:final_year_project_rider_app/Screens/searchScreen.dart';
 import 'package:final_year_project_rider_app/Widgets/progressDialog.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
@@ -131,6 +132,7 @@ class _MainScreen extends State<MainScreen> {
             myLocationEnabled: true,
             zoomGesturesEnabled: true,
             zoomControlsEnabled: true,
+            polylines: polylineSet,
             onMapCreated: (GoogleMapController controller) {
               _controllerGoogleMap.complete(controller);
               newGoogleMapController = controller;
@@ -332,5 +334,33 @@ class _MainScreen extends State<MainScreen> {
     Navigator.pop(context);
     print("THis is encoded Points :: ");
     print(details?.encodedPoints);
+
+    PolylinePoints polylinePoints = PolylinePoints();
+    List<PointLatLng> decodePolyLinePointsResult =
+        polylinePoints.decodePolyline(details!.encodedPoints);
+
+    plineCoordinates.clear();
+    if (decodePolyLinePointsResult.isNotEmpty) {
+      decodePolyLinePointsResult.forEach((PointLatLng pointLatLng) {
+        plineCoordinates.add(
+          LatLng(pointLatLng.latitude, pointLatLng.longitude),
+        );
+      });
+    }
+
+    polylineSet.clear();
+    setState(() {
+      Polyline polyline = Polyline(
+        color: Colors.pink,
+        polylineId: PolylineId("PolylineID"),
+        jointType: JointType.round,
+        points: plineCoordinates,
+        width: 5,
+        startCap: Cap.roundCap,
+        endCap: Cap.roundCap,
+        geodesic: true,
+      );
+      polylineSet.add(polyline);
+    });
   }
 }
