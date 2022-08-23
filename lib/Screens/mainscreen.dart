@@ -29,6 +29,9 @@ class _MainScreen extends State<MainScreen> {
   var geoLocator = Geolocator();
   double bottomPaddingOfMap = 0;
 
+  Set<Marker> markersSet = {};
+  Set<Circle> circlesSet = {};
+
   void locatePosition() async {
     Position position = await Geolocator.getCurrentPosition(
         desiredAccuracy: LocationAccuracy.high);
@@ -133,6 +136,8 @@ class _MainScreen extends State<MainScreen> {
             zoomGesturesEnabled: true,
             zoomControlsEnabled: true,
             polylines: polylineSet,
+            markers: markersSet,
+            circles: circlesSet,
             onMapCreated: (GoogleMapController controller) {
               _controllerGoogleMap.complete(controller);
               newGoogleMapController = controller;
@@ -362,5 +367,65 @@ class _MainScreen extends State<MainScreen> {
       );
       polylineSet.add(polyline);
     });
+    LatLngBounds latLngBounds;
+    if (pickUpLatLng.latitude > dropOffLatLng.latitude &&
+        pickUpLatLng.longitude > dropOffLatLng.longitude) {
+      latLngBounds =
+          LatLngBounds(southwest: dropOffLatLng, northeast: pickUpLatLng);
+    } else if (pickUpLatLng.longitude > dropOffLatLng.longitude) {
+      LatLngBounds(
+          southwest: LatLng(pickUpLatLng.latitude, dropOffLatLng.longitude),
+          northeast: LatLng(dropOffLatLng.latitude, pickUpLatLng.longitude));
+    } else if (pickUpLatLng.latitude > dropOffLatLng.latitude) {
+      LatLngBounds(
+          southwest: LatLng(dropOffLatLng.latitude, pickUpLatLng.longitude),
+          northeast: LatLng(pickUpLatLng.latitude, dropOffLatLng.longitude));
+    } else {
+      latLngBounds =
+          LatLngBounds(southwest: pickUpLatLng, northeast: dropOffLatLng);
+      newGoogleMapController.animateCamera(
+        CameraUpdate.newLatLngBounds(latLngBounds, 70),
+      );
+      Marker pickUpLocMarker = Marker(
+        icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueGreen),
+        infoWindow:
+            InfoWindow(title: initialPos.placeName, snippet: "my Location"),
+        position: pickUpLatLng,
+        markerId: MarkerId("pickUpId"),
+      );
+
+      Marker dropOffLocMarker = Marker(
+        icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueRed),
+        infoWindow:
+            InfoWindow(title: finalPos.placeName, snippet: "Drop-Off Location"),
+        position: dropOffLatLng,
+        markerId: MarkerId("dropOffId"),
+      );
+      setState(() {
+        markersSet.add(pickUpLocMarker);
+        markersSet.add(dropOffLocMarker);
+      });
+
+      Circle pickUpCirlce = Circle(
+        fillColor: Colors.yellow,
+        center: pickUpLatLng,
+        radius: 12,
+        strokeColor: Colors.yellowAccent,
+        circleId: CircleId("pickUpId"),
+      );
+
+      Circle dropOffCirlce = Circle(
+        fillColor: Colors.red,
+        center: pickUpLatLng,
+        radius: 12,
+        strokeColor: Colors.red,
+        circleId: CircleId("dropOffId"),
+      );
+
+      setState(() {
+        circlesSet.add(pickUpCirlce);
+        circlesSet.add(dropOffCirlce);
+      });
+    }
   }
 }
