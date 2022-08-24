@@ -5,6 +5,7 @@ import 'package:final_year_project_rider_app/Screens/searchScreen.dart';
 import 'package:final_year_project_rider_app/Widgets/progressDialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
@@ -337,12 +338,12 @@ class _MainScreen extends State<MainScreen> {
                     )
                   ]),
               child: Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: const EdgeInsets.symmetric(vertical: 17.0),
                 child: Column(
                   children: [
                     Container(
                       width: double.infinity,
-                      color: Colors.tealAccent,
+                      color: Colors.tealAccent[100],
                       child: Padding(
                         padding: EdgeInsets.symmetric(horizontal: 16.0),
                         child: Row(
@@ -371,6 +372,63 @@ class _MainScreen extends State<MainScreen> {
                               ],
                             )
                           ],
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 20.0,
+                    ),
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 20.0),
+                      child: Row(
+                        children: [
+                          Icon(
+                            FontAwesomeIcons.moneyCheckAlt,
+                            size: 18.0,
+                            color: Colors.black54,
+                          ),
+                          SizedBox(
+                            width: 16.0,
+                          ),
+                          Text("Cash"),
+                          SizedBox(
+                            width: 6.0,
+                          ),
+                          Icon(
+                            Icons.keyboard_arrow_down,
+                            color: Colors.black54,
+                            size: 16.0,
+                          )
+                        ],
+                      ),
+                    ),
+                    SizedBox(height: 24.0),
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 16.0),
+                      child: RaisedButton(
+                        onPressed: () {
+                          print("clicked");
+                        },
+                        color: Theme.of(context).accentColor,
+                        child: Padding(
+                          padding: EdgeInsets.all(17.0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                "Request",
+                                style: TextStyle(
+                                    fontSize: 20.0,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white),
+                              ),
+                              Icon(
+                                FontAwesomeIcons.taxi,
+                                color: Colors.white,
+                                size: 26.0,
+                              )
+                            ],
+                          ),
                         ),
                       ),
                     ),
