@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:final_year_project_rider_app/Assistants/assistantMethods.dart';
 import 'package:final_year_project_rider_app/DataHandler/Models/directionDetails.dart';
 import 'package:final_year_project_rider_app/DataHandler/appData.dart';
@@ -24,7 +25,7 @@ class _MainScreen extends State<MainScreen> with TickerProviderStateMixin {
   late GoogleMapController newGoogleMapController;
 
   GlobalKey<ScaffoldState> scaffoldKey = new GlobalKey<ScaffoldState>();
-  late DirectionDetails tripDirectionDetails;
+  var tripDirectionDetails;
 
   List<LatLng> plineCoordinates = [];
   Set<Polyline> polylineSet = {};
@@ -35,10 +36,33 @@ class _MainScreen extends State<MainScreen> with TickerProviderStateMixin {
   Set<Marker> markersSet = {};
   Set<Circle> circlesSet = {};
 
+  static const colorizeColors = [
+    Colors.purple,
+    Colors.blue,
+    Colors.yellow,
+    Colors.red,
+    Colors.green,
+  ];
+
+  static const colorizeTextStyle = TextStyle(
+    fontSize: 40.0,
+    fontFamily: 'Horizon',
+  );
+
   double rideDetailsContainerHeight = 0;
   double searchContainerHeight = 300;
+  double requestRideContainerHeight = 0;
 
   bool drawerOpen = true;
+
+  void displayRequestContainer() {
+    setState(() {
+      requestRideContainerHeight = 250;
+      rideDetailsContainerHeight = 0;
+      bottomPaddingOfMap = 230;
+      drawerOpen = true;
+    });
+  }
 
   resetApp() {
     setState(() {
@@ -465,7 +489,7 @@ class _MainScreen extends State<MainScreen> with TickerProviderStateMixin {
                         padding: EdgeInsets.symmetric(horizontal: 16.0),
                         child: RaisedButton(
                           onPressed: () {
-                            print("clicked");
+                            displayRequestContainer();
                           },
                           color: Theme.of(context).accentColor,
                           child: Padding(
@@ -492,6 +516,92 @@ class _MainScreen extends State<MainScreen> with TickerProviderStateMixin {
                       ),
                     ],
                   ),
+                ),
+              ),
+            ),
+          ),
+          //requesting container
+          Positioned(
+            bottom: 0.0,
+            left: 0.0,
+            right: 0.0,
+            child: Container(
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(16.0),
+                    topRight: Radius.circular(16.0),
+                  ),
+                  color: Colors.white,
+                  boxShadow: [
+                    BoxShadow(
+                      spreadRadius: 0.5,
+                      blurRadius: 16.0,
+                      color: Colors.black54,
+                      offset: Offset(0.7, 0.7),
+                    )
+                  ]),
+              height: requestRideContainerHeight,
+              child: Padding(
+                padding: const EdgeInsets.all(30.0),
+                child: Column(
+                  children: [
+                    SizedBox(
+                      height: 12.0,
+                    ),
+                    SizedBox(
+                      width: double.infinity,
+                      child: AnimatedTextKit(
+                        animatedTexts: [
+                          ColorizeAnimatedText(
+                            'Requesting Ride...',
+                            textAlign: TextAlign.center,
+                            textStyle: colorizeTextStyle,
+                            colors: colorizeColors,
+                          ),
+                          ColorizeAnimatedText(
+                            'Please wait...',
+                            textAlign: TextAlign.center,
+                            textStyle: colorizeTextStyle,
+                            colors: colorizeColors,
+                          ),
+                          ColorizeAnimatedText(
+                            'Finding Driver...',
+                            textAlign: TextAlign.center,
+                            textStyle: colorizeTextStyle,
+                            colors: colorizeColors,
+                          ),
+                        ],
+                        isRepeatingAnimation: true,
+                        onTap: () {
+                          print("Tap Event");
+                        },
+                      ),
+                    ),
+                    SizedBox(
+                      height: 22.0,
+                    ),
+                    Container(
+                      height: 60.0,
+                      width: 60.0,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(26.0),
+                        border: Border.all(width: 2.0, color: Colors.grey),
+                      ),
+                      child: Icon(
+                        Icons.close,
+                        size: 26.0,
+                      ),
+                    ),
+                    const SizedBox(height: 10.0),
+                    Container(
+                        width: double.infinity,
+                        child: Text(
+                          "Cancel Ride",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(fontSize: 12.0),
+                        )),
+                  ],
                 ),
               ),
             ),
