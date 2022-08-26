@@ -38,12 +38,30 @@ class _MainScreen extends State<MainScreen> with TickerProviderStateMixin {
   double rideDetailsContainerHeight = 0;
   double searchContainerHeight = 300;
 
+  bool drawerOpen = true;
+
+  resetApp() {
+    setState(() {
+      drawerOpen = true;
+      searchContainerHeight = 0;
+      rideDetailsContainerHeight = 0;
+      bottomPaddingOfMap = 230.0;
+
+      polylineSet.clear();
+      markersSet.clear();
+      circlesSet.clear();
+      plineCoordinates.clear();
+    });
+    locatePosition();
+  }
+
   void displayRideDetailsContainer() async {
     await getPlaceDirection();
     setState(() {
       searchContainerHeight = 0;
       rideDetailsContainerHeight = 240.0;
       bottomPaddingOfMap = 230.0;
+      drawerOpen = false;
     });
   }
 
@@ -166,11 +184,15 @@ class _MainScreen extends State<MainScreen> with TickerProviderStateMixin {
           //draw button
 
           Positioned(
-            top: 45.0,
+            top: 38.0,
             left: 22.0,
             child: GestureDetector(
               onTap: () {
-                scaffoldKey.currentState!.openDrawer();
+                if (drawerOpen = true) {
+                  scaffoldKey.currentState!.openDrawer();
+                } else {
+                  resetApp();
+                }
               },
               child: Container(
                 decoration: BoxDecoration(
@@ -186,7 +208,8 @@ class _MainScreen extends State<MainScreen> with TickerProviderStateMixin {
                 ),
                 child: CircleAvatar(
                   backgroundColor: Colors.white,
-                  child: Icon(Icons.menu, color: Colors.black),
+                  child: Icon((drawerOpen) ? Icons.menu : Icons.close,
+                      color: Colors.black),
                   radius: 20.0,
                 ),
               ),
