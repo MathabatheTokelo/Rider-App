@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:final_year_project_rider_app/Assistants/assistantMethods.dart';
+import 'package:final_year_project_rider_app/DataHandler/Models/directionDetails.dart';
 import 'package:final_year_project_rider_app/DataHandler/appData.dart';
 import 'package:final_year_project_rider_app/Screens/searchScreen.dart';
 import 'package:final_year_project_rider_app/Widgets/progressDialog.dart';
@@ -23,6 +24,7 @@ class _MainScreen extends State<MainScreen> with TickerProviderStateMixin {
   late GoogleMapController newGoogleMapController;
 
   GlobalKey<ScaffoldState> scaffoldKey = new GlobalKey<ScaffoldState>();
+  late DirectionDetails tripDirectionDetails;
 
   List<LatLng> plineCoordinates = [];
   Set<Polyline> polylineSet = {};
@@ -389,12 +391,21 @@ class _MainScreen extends State<MainScreen> with TickerProviderStateMixin {
                                         fontFamily: "Brand-Bold"),
                                   ),
                                   Text(
-                                    "10Km",
+                                    (((tripDirectionDetails != null)
+                                        ? tripDirectionDetails.distanceText
+                                        : '')),
                                     style: TextStyle(
                                         fontSize: 16.0, color: Colors.grey),
-                                  )
+                                  ),
                                 ],
-                              )
+                              ),
+                              Expanded(child: Container()),
+                              Text(
+                                ((tripDirectionDetails != null)
+                                    ? '\R${AssistantMethods.calculateFares(tripDirectionDetails)}'
+                                    : ''),
+                                style: TextStyle(fontFamily: "Brand-Bold"),
+                              ),
                             ],
                           ),
                         ),
@@ -481,6 +492,9 @@ class _MainScreen extends State<MainScreen> with TickerProviderStateMixin {
             ));
     var details = await AssistantMethods.obtainPlaceDirectionDetails(
         pickUpLatLng, dropOffLatLng);
+    setState(() {
+      tripDirectionDetails = details!;
+    });
     Navigator.pop(context);
     print("THis is encoded Points :: ");
     print(details?.encodedPoints);
