@@ -3,8 +3,12 @@ import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:final_year_project_rider_app/Assistants/assistantMethods.dart';
 import 'package:final_year_project_rider_app/DataHandler/Models/directionDetails.dart';
 import 'package:final_year_project_rider_app/DataHandler/appData.dart';
+import 'package:final_year_project_rider_app/Screens/loginscreen.dart';
 import 'package:final_year_project_rider_app/Screens/searchScreen.dart';
 import 'package:final_year_project_rider_app/Widgets/progressDialog.dart';
+import 'package:final_year_project_rider_app/configMaps.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -55,6 +59,49 @@ class _MainScreen extends State<MainScreen> with TickerProviderStateMixin {
 
   bool drawerOpen = true;
 
+  late DatabaseReference rideRequestReference;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+    AssistantMethods.getCurrentOnLineUserInfo();
+  }
+
+  void saveRideRequest() {
+    rideRequestReference =
+        FirebaseDatabase.instance.reference().child("Ride Request");
+    var pickUp = Provider.of<AppData>(context, listen: false).pickUpLocation;
+    var dropOff = Provider.of<AppData>(context, listen: false).dropOffLocation;
+    Map pickUpLocationMap = {
+      "latitude": pickUp!.latitude.toString(),
+      "longitudde": pickUp.longitude.toString(),
+    };
+
+    Map dropOffLocationMap = {
+      "latitude": dropOff!.latitude.toString(),
+      "longitudde": dropOff.longitude.toString(),
+    };
+
+    Map rideInfoMap = {
+      "driver_id": "waiting",
+      "payment_method": "cash",
+      "pickup": pickUpLocationMap,
+      "dropOff": dropOffLocationMap,
+      "created_at": DateTime.now().toString(),
+      "rider_name": userCurrentInfo!.name,
+      "rider_phone": userCurrentInfo!.phone,
+      "pickup_address": pickUp.placeName,
+      "dropoff address": dropOff.placeName,
+    };
+    rideRequestReference.push().set(rideInfoMap);
+  }
+
+  void cancelRideRequest() {
+    rideRequestReference.remove();
+  }
+
   void displayRequestContainer() {
     setState(() {
       requestRideContainerHeight = 250;
@@ -62,6 +109,7 @@ class _MainScreen extends State<MainScreen> with TickerProviderStateMixin {
       bottomPaddingOfMap = 230;
       drawerOpen = true;
     });
+    saveRideRequest();
   }
 
   resetApp() {
@@ -69,8 +117,8 @@ class _MainScreen extends State<MainScreen> with TickerProviderStateMixin {
       drawerOpen = true;
       searchContainerHeight = 0;
       rideDetailsContainerHeight = 0;
+      requestRideContainerHeight = 0;
       bottomPaddingOfMap = 230.0;
-
       polylineSet.clear();
       markersSet.clear();
       circlesSet.clear();
@@ -177,6 +225,20 @@ class _MainScreen extends State<MainScreen> with TickerProviderStateMixin {
               title: Text(
                 "About",
                 style: TextStyle(fontSize: 15.0),
+              ),
+            ),
+            GestureDetector(
+              onTap: () {
+                FirebaseAuth.instance.signOut();
+                Navigator.pushNamedAndRemoveUntil(
+                    context, LoginScreen.idScreen, (route) => false);
+              },
+              child: ListTile(
+                leading: Icon(Icons.info),
+                title: Text(
+                  "Sign Out",
+                  style: TextStyle(fontSize: 15.0),
+                ),
               ),
             ),
           ],
@@ -580,17 +642,23 @@ class _MainScreen extends State<MainScreen> with TickerProviderStateMixin {
                     SizedBox(
                       height: 22.0,
                     ),
-                    Container(
-                      height: 60.0,
-                      width: 60.0,
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(26.0),
-                        border: Border.all(width: 2.0, color: Colors.grey),
-                      ),
-                      child: Icon(
-                        Icons.close,
-                        size: 26.0,
+                    GestureDetector(
+                      onTap: () {
+                        cancelRideRequest();
+                        resetApp();
+                      },
+                      child: Container(
+                        height: 60.0,
+                        width: 60.0,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(26.0),
+                          border: Border.all(width: 2.0, color: Colors.grey),
+                        ),
+                        child: Icon(
+                          Icons.close,
+                          size: 26.0,
+                        ),
                       ),
                     ),
                     const SizedBox(height: 10.0),
