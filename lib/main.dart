@@ -2,6 +2,7 @@ import 'package:final_year_project_rider_app/DataHandler/appData.dart';
 import 'package:final_year_project_rider_app/Screens/loginscreen.dart';
 import 'package:final_year_project_rider_app/Screens/mainscreen.dart';
 import 'package:final_year_project_rider_app/Screens/registrationscreen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
@@ -31,7 +32,9 @@ class MyApp extends StatelessWidget {
           primarySwatch: Colors.blueGrey,
           visualDensity: VisualDensity.adaptivePlatformDensity,
         ),
-        initialRoute: LoginScreen.idScreen,
+        initialRoute: FirebaseAuth.instance.currentUser == null
+            ? LoginScreen.idScreen
+            : MainScreen.idScreen,
         routes: {
           RegistrationScreenn.idScreen: (context) => RegistrationScreenn(),
           LoginScreen.idScreen: (context) => LoginScreen(),

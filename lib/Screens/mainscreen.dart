@@ -33,7 +33,7 @@ class _MainScreen extends State<MainScreen> with TickerProviderStateMixin {
 
   List<LatLng> plineCoordinates = [];
   Set<Polyline> polylineSet = {};
-  late Position currentPosition;
+  Position? currentPosition;
   var geoLocator = Geolocator();
   double bottomPaddingOfMap = 0;
 
@@ -234,7 +234,7 @@ class _MainScreen extends State<MainScreen> with TickerProviderStateMixin {
                     context, LoginScreen.idScreen, (route) => false);
               },
               child: ListTile(
-                leading: Icon(Icons.info),
+                leading: Icon(Icons.logout),
                 title: Text(
                   "Sign Out",
                   style: TextStyle(fontSize: 15.0),
@@ -402,7 +402,7 @@ class _MainScreen extends State<MainScreen> with TickerProviderStateMixin {
                                       null
                                   ? Provider.of<AppData>(context)
                                       .pickUpLocation
-                                      ?.placeName
+                                      .placeName
                                   : "Add Home"),
                               const SizedBox(
                                 height: 4.0,
@@ -694,7 +694,7 @@ class _MainScreen extends State<MainScreen> with TickerProviderStateMixin {
     var details = await AssistantMethods.obtainPlaceDirectionDetails(
         pickUpLatLng, dropOffLatLng);
     setState(() {
-      tripDirectionDetails = details!;
+      tripDirectionDetails = details;
     });
     Navigator.pop(context);
     print("THis is encoded Points :: ");

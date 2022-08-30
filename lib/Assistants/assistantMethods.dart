@@ -3,9 +3,13 @@ import 'package:final_year_project_rider_app/DataHandler/Models/address.dart';
 import 'package:final_year_project_rider_app/DataHandler/Models/directionDetails.dart';
 import 'package:final_year_project_rider_app/DataHandler/appData.dart';
 import 'package:final_year_project_rider_app/configMaps.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
+
+import '../DataHandler/Models/allUsers.dart';
 
 class AssistantMethods {
   static Future<String> searchCoordinateAddress(
@@ -15,8 +19,8 @@ class AssistantMethods {
     String url =
         "https://maps.googleapis.com/maps/api/geocode/json?latlng=${position.latitude},${position.longitude}&key=AIzaSyAqNTyL2pxuryBOnkNApWU257me8961uKQ";
     var response = await RequestAssistant.getRequest(url);
-    if (response != "Failed.") {
-      //placeAddres = response["results"][0]["formatted_address"];
+    if (response != "failed.") {
+      placeAddres = response["results"][0]["formatted_address"];
       st1 = response["results"][0]["address_components"][3]["long_name"];
       st2 = response["results"][0]["address_components"][4]["long_name"];
       st3 = response["results"][0]["address_components"][5]["long_name"];
@@ -65,5 +69,18 @@ class AssistantMethods {
 
     double localAmount = totalFareAmount * 16.75;
     return localAmount.truncate();
+  }
+
+  static Future<void> getCurrentOnLineUserInfo() async {
+    firebaseUser = await FirebaseAuth.instance.currentUser;
+    String userId = firebaseUser!.uid;
+    DatabaseReference reference =
+        FirebaseDatabase.instance.ref().child("user").child(userId);
+
+    final snapshot =
+        await reference.get(); // you should use await on async methods
+    if (snapshot.value != null) {
+      userCurrentInfo = Users.fromSnapshot(snapshot);
+    }
   }
 }

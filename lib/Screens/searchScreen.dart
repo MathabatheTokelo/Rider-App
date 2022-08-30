@@ -2,13 +2,11 @@ import 'package:final_year_project_rider_app/Assistants/request_assistant.dart';
 import 'package:final_year_project_rider_app/DataHandler/Models/address.dart';
 import 'package:final_year_project_rider_app/DataHandler/Models/placePredictions.dart';
 import 'package:final_year_project_rider_app/DataHandler/appData.dart';
-import 'package:final_year_project_rider_app/Screens/mainscreen.dart';
 import 'package:final_year_project_rider_app/Widgets/divider.dart';
 import 'package:final_year_project_rider_app/Widgets/progressDialog.dart';
 import 'package:final_year_project_rider_app/configMaps.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'mainscreen.dart';
 
 class SearchScreen extends StatefulWidget {
   SearchScreen({Key? key}) : super(key: key);
@@ -18,8 +16,8 @@ class SearchScreen extends StatefulWidget {
 }
 
 class _SearchScreenState extends State<SearchScreen> {
-  TextEditingController pickUpTextEditingController = TextEditingController();
-  TextEditingController dropOffTextEditingController = TextEditingController();
+  var pickUpTextEditingController = TextEditingController();
+  var dropOffTextEditingController = TextEditingController();
   List<PlacePredictions> placePredictionList = [];
 
   @override
@@ -45,7 +43,7 @@ class _SearchScreenState extends State<SearchScreen> {
                   left: 25.0, top: 20.0, right: 25.0, bottom: 20.0),
               child: Column(
                 children: [
-                  SizedBox(height: 5.0),
+                  SizedBox(height: 10.0),
                   Stack(
                     children: [
                       GestureDetector(
@@ -154,6 +152,7 @@ class _SearchScreenState extends State<SearchScreen> {
                       return PredictionTile(
                         placePredictions: placePredictionList[index],
                       );
+                      setState(() {});
                     },
                     separatorBuilder: (BuildContext context, int index) =>
                         DividerWidget(),
@@ -184,6 +183,7 @@ class _SearchScreenState extends State<SearchScreen> {
             .map((e) => PlacePredictions.fromJson(e))
             .toList();
         placePredictionList = placeList;
+        setState(() {});
       }
     }
   }
