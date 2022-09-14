@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:final_year_project_rider_app/Assistants/request_assistant.dart';
 import 'package:final_year_project_rider_app/DataHandler/Models/address.dart';
 import 'package:final_year_project_rider_app/DataHandler/Models/directionDetails.dart';
@@ -82,5 +84,11 @@ class AssistantMethods {
     if (snapshot.value != null) {
       userCurrentInfo = Users.fromSnapshot(snapshot);
     }
+  }
+
+  static double createRandomNumber(int number) {
+    var random = Random();
+    int radNumber = random.nextInt(number);
+    return radNumber.toDouble();
   }
 }
