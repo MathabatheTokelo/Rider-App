@@ -166,6 +166,7 @@ class _MainScreen extends State<MainScreen> with TickerProviderStateMixin {
   );
   @override
   Widget build(BuildContext context) {
+    createIconMaker();
     return Scaffold(
       key: scaffoldKey,
       appBar: AppBar(title: const Text("Fiacre")),
@@ -862,7 +863,7 @@ class _MainScreen extends State<MainScreen> with TickerProviderStateMixin {
       Marker maker = Marker(
         markerId: MarkerId('driver${driver.key}'),
         position: driverAvailablePosition,
-        icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueBlue),
+        icon: nearByIcon,
         rotation: AssistantMethods.createRandomNumber(360),
       );
       tMakers.add(maker);
@@ -870,5 +871,17 @@ class _MainScreen extends State<MainScreen> with TickerProviderStateMixin {
     setState(() {
       markersSet = tMakers;
     });
+  }
+
+  void createIconMaker() {
+    if (nearByIcon == null) {
+      ImageConfiguration imageConfiguration =
+          createLocalImageConfiguration(context, size: Size(2, 2));
+      BitmapDescriptor.fromAssetImage(
+              imageConfiguration, "images/car_android.png")
+          .then((value) {
+        nearByIcon = value;
+      });
+    }
   }
 }
