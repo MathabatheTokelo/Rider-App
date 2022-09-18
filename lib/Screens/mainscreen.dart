@@ -17,6 +17,7 @@ import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 
 class MainScreen extends StatefulWidget {
@@ -65,7 +66,7 @@ class _MainScreen extends State<MainScreen> with TickerProviderStateMixin {
 
   late DatabaseReference rideRequestReference;
 
-  late BitmapDescriptor nearByIcon;
+  var nearByIcon;
 
   @override
   void initState() {
@@ -118,7 +119,7 @@ class _MainScreen extends State<MainScreen> with TickerProviderStateMixin {
     saveRideRequest();
   }
 
-  resetApp() {
+  resetApp() async {
     setState(() {
       drawerOpen = true;
       searchContainerHeight = 0;
@@ -130,7 +131,6 @@ class _MainScreen extends State<MainScreen> with TickerProviderStateMixin {
       circlesSet.clear();
       plineCoordinates.clear();
     });
-    locatePosition();
   }
 
   void displayRideDetailsContainer() async {
@@ -265,13 +265,29 @@ class _MainScreen extends State<MainScreen> with TickerProviderStateMixin {
             polylines: polylineSet,
             markers: markersSet,
             circles: circlesSet,
-            onMapCreated: (GoogleMapController controller) {
+            onMapCreated: (GoogleMapController controller) async {
               _controllerGoogleMap.complete(controller);
               newGoogleMapController = controller;
               setState(() {
                 bottomPaddingOfMap = 400.0;
               });
-              locatePosition();
+
+              var LocationStatus = await Permission.location.status;
+              var LocationWhenInUseStatus =
+                  await Permission.locationWhenInUse.status;
+
+              if (!LocationStatus.isGranted &&
+                  !LocationWhenInUseStatus.isGranted) {
+                await Permission.location.request();
+                await Permission.locationWhenInUse.request();
+              }
+              if (await Permission.location.isGranted) {
+                if (await Permission.locationWhenInUse.isGranted) {
+                  locatePosition();
+                }
+              } else {
+                print("Turn On Location");
+              }
             },
           ),
 
