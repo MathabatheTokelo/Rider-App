@@ -169,7 +169,11 @@ class _MainScreen extends State<MainScreen> with TickerProviderStateMixin {
     createIconMaker();
     return Scaffold(
       key: scaffoldKey,
-      appBar: AppBar(title: const Text("Fiacre")),
+      appBar: AppBar(
+        title: const Text("Fiacre"),
+        titleTextStyle: TextStyle(),
+        backgroundColor: Colors.black87,
+      ),
       drawer: Container(
         color: Colors.white,
         width: 255.0,
