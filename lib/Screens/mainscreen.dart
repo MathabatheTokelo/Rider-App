@@ -37,7 +37,7 @@ class _MainScreen extends State<MainScreen> with TickerProviderStateMixin {
 
   List<LatLng> plineCoordinates = [];
   Set<Polyline> polylineSet = {};
-  Position? currentPosition;
+  var currentPosition;
   var geoLocator = Geolocator();
   double bottomPaddingOfMap = 0;
 
@@ -82,13 +82,13 @@ class _MainScreen extends State<MainScreen> with TickerProviderStateMixin {
     var pickUp = Provider.of<AppData>(context, listen: false).pickUpLocation;
     var dropOff = Provider.of<AppData>(context, listen: false).dropOffLocation;
     Map pickUpLocationMap = {
-      "latitude": pickUp!.latitude.toString(),
+      "latitude": pickUp.latitude.toString(),
       "longitudde": pickUp.longitude.toString(),
     };
 
     Map dropOffLocationMap = {
       "latitude": dropOff!.latitude.toString(),
-      "longitudde": dropOff.longitude.toString(),
+      "longitudde": dropOff!.longitude.toString(),
     };
 
     Map rideInfoMap = {
@@ -150,11 +150,11 @@ class _MainScreen extends State<MainScreen> with TickerProviderStateMixin {
 
     LatLng latLngPosition = LatLng(position.latitude, position.longitude);
     CameraPosition cameraPosition =
-        new CameraPosition(target: latLngPosition, zoom: 14);
+        new CameraPosition(target: latLngPosition, zoom: 15);
     newGoogleMapController
         .animateCamera(CameraUpdate.newCameraPosition(cameraPosition));
 
-    String address =
+    var address =
         await AssistantMethods.searchCoordinateAddress(position, context);
     print("This is your Address :: " + address);
     intitGeoFireListner();
@@ -442,18 +442,14 @@ class _MainScreen extends State<MainScreen> with TickerProviderStateMixin {
               });
 
               var LocationStatus = await Permission.location.status;
-              var LocationWhenInUseStatus =
-                  await Permission.locationWhenInUse.status;
 
-              if (!LocationStatus.isGranted &&
-                  !LocationWhenInUseStatus.isGranted) {
+              if (!LocationStatus.isGranted) {
                 await Permission.location.request();
-                await Permission.locationWhenInUse.request();
+                ;
               }
               if (await Permission.location.isGranted) {
-                if (await Permission.locationWhenInUse.isGranted) {
-                  locatePosition();
-                }
+                print("Location is on");
+                locatePosition();
               } else {
                 print("Turn On Location");
               }
@@ -566,7 +562,7 @@ class _MainScreen extends State<MainScreen> with TickerProviderStateMixin {
                             ],
                           ),
                           child: Padding(
-                            padding: const EdgeInsets.all(12.0),
+                            padding: EdgeInsets.all(12.0),
                             child: Row(
                               children: [
                                 Icon(
@@ -583,30 +579,24 @@ class _MainScreen extends State<MainScreen> with TickerProviderStateMixin {
                       SizedBox(height: 24.0),
                       Row(
                         children: [
-                          Icon(Icons.home, color: Colors.grey),
+                          Icon(Icons.location_on, color: Colors.grey),
                           SizedBox(
                             width: 12.0,
                           ),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
                             children: [
-                              Text(Provider.of<AppData>(context)
-                                          .pickUpLocation !=
-                                      null
-                                  ? Provider.of<AppData>(context)
-                                      .pickUpLocation
-                                      .placeName
-                                  : "Add Home"),
-                              const SizedBox(
-                                height: 4.0,
-                              ),
-                              const Text(
-                                "Your living home address",
-                                style: TextStyle(
-                                    color: Colors.black54, fontSize: 12.0),
+                              Text(
+                                (Provider.of<AppData>(context).pickUpLocation !=
+                                        null
+                                    ? (Provider.of<AppData>(context)
+                                        .pickUpLocation
+                                        .placeName)
+                                    : "Location"),
+                                style: TextStyle(fontSize: 11.0),
                               ),
                             ],
-                          )
+                          ),
                         ],
                       ),
                       SizedBox(height: 10.0),
@@ -621,14 +611,14 @@ class _MainScreen extends State<MainScreen> with TickerProviderStateMixin {
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: const [
-                              Text("Add Work"),
+                              Text("Add Home"),
                               SizedBox(
                                 height: 4.0,
                               ),
                               Text(
-                                "Your office address",
+                                "Your Home address",
                                 style: TextStyle(
-                                    color: Colors.black54, fontSize: 12.0),
+                                    color: Colors.black54, fontSize: 11.0),
                               ),
                             ],
                           )
@@ -695,7 +685,7 @@ class _MainScreen extends State<MainScreen> with TickerProviderStateMixin {
                                   Text(
                                     (((tripDirectionDetails != null)
                                         ? tripDirectionDetails.distanceText
-                                        : '')),
+                                        : "Error")),
                                     style: TextStyle(
                                         fontSize: 16.0, color: Colors.grey),
                                   ),
@@ -876,8 +866,8 @@ class _MainScreen extends State<MainScreen> with TickerProviderStateMixin {
     var initialPos =
         Provider.of<AppData>(context, listen: false).pickUpLocation;
     var finalPos = Provider.of<AppData>(context, listen: false).dropOffLocation;
-    var pickUpLatLng = LatLng(initialPos!.latitude, initialPos.longitude);
-    var dropOffLatLng = LatLng(finalPos!.latitude, finalPos.longitude);
+    var pickUpLatLng = LatLng(initialPos.latitude, initialPos.longitude);
+    var dropOffLatLng = LatLng(finalPos.latitude, finalPos.longitude);
 
     showDialog(
         context: context,
@@ -891,11 +881,11 @@ class _MainScreen extends State<MainScreen> with TickerProviderStateMixin {
     });
     Navigator.pop(context);
     print("THis is encoded Points :: ");
-    print(details?.encodedPoints);
+    print(details.encodedPoints);
 
     PolylinePoints polylinePoints = PolylinePoints();
     List<PointLatLng> decodePolyLinePointsResult =
-        polylinePoints.decodePolyline(details!.encodedPoints);
+        polylinePoints.decodePolyline(details.encodedPoints);
 
     plineCoordinates.clear();
     if (decodePolyLinePointsResult.isNotEmpty) {
