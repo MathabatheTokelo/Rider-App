@@ -29,7 +29,7 @@ class AssistantMethods {
       st4 = response["results"][0]["address_components"][6]["long_name"];
       placeAddres = st1 + " " + st2 + " " + st3;
 */
-      Address userPickUpAddress = new Address();
+      var userPickUpAddress = new Address();
       userPickUpAddress.longitude = position.longitude;
       userPickUpAddress.latitude = position.latitude;
       userPickUpAddress.placeName = placeAddres;
@@ -40,7 +40,7 @@ class AssistantMethods {
     return placeAddres;
   }
 
-  static Future<DirectionDetails> obtainPlaceDirectionDetails(
+  static Future<DirectionDetails?> obtainPlaceDirectionDetails(
       LatLng initialPosition, LatLng finalPosition) async {
     var directionUrl =
         "https://maps.googleapis.com/maps/api/directions/json?origin=${initialPosition.latitude},${initialPosition.longitude}&destination=${finalPosition.latitude},${finalPosition.longitude}&key=$mapKey";
@@ -48,7 +48,7 @@ class AssistantMethods {
     var res = await RequestAssistant.getRequest(directionUrl);
     if (res == "failed") {
       print("Not done");
-      // return null;
+      return null;
     }
     DirectionDetails directionDetails = DirectionDetails();
     directionDetails.encodedPoints =
@@ -61,7 +61,7 @@ class AssistantMethods {
         res["routes"][0]["legs"][0]["duration"]["text"];
     directionDetails.durationValue =
         res["routes"][0]["legs"][0]["duration"]["value"];
-    print(directionDetails.distanceValue);
+
     return directionDetails;
   }
 
@@ -78,9 +78,9 @@ class AssistantMethods {
 
   static Future<void> getCurrentOnLineUserInfo() async {
     firebaseUser = await FirebaseAuth.instance.currentUser;
-    String userId = firebaseUser!.uid;
+    var userId = firebaseUser!.uid;
     DatabaseReference reference =
-        FirebaseDatabase.instance.ref().child("user").child(userId);
+        FirebaseDatabase.instance.ref().child("user").child(userId!);
 
     final snapshot =
         await reference.get(); // you should use await on async methods

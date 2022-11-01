@@ -21,7 +21,7 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 
 class MainScreen extends StatefulWidget {
-  static const String idScreen = "mainScreen";
+  static String idScreen = "mainScreen";
   MainScreen({Key? key}) : super(key: key);
 
   @override
@@ -64,7 +64,7 @@ class _MainScreen extends State<MainScreen> with TickerProviderStateMixin {
   bool drawerOpen = true;
   bool nearbyAvailableDriverKeysLoaded = false;
 
-  late DatabaseReference rideRequestReference;
+  var rideRequestReference;
 
   var nearByIcon;
 
@@ -78,6 +78,7 @@ class _MainScreen extends State<MainScreen> with TickerProviderStateMixin {
 
   void saveRideRequest() {
     rideRequestReference =
+        // ignore: deprecated_member_use
         FirebaseDatabase.instance.reference().child("Ride Request");
     var pickUp = Provider.of<AppData>(context, listen: false).pickUpLocation;
     var dropOff = Provider.of<AppData>(context, listen: false).dropOffLocation;
@@ -87,8 +88,8 @@ class _MainScreen extends State<MainScreen> with TickerProviderStateMixin {
     };
 
     Map dropOffLocationMap = {
-      "latitude": dropOff!.latitude.toString(),
-      "longitudde": dropOff!.longitude.toString(),
+      "latitude": dropOff.latitude.toString(),
+      "longitudde": dropOff.longitude.toString(),
     };
 
     Map rideInfoMap = {
@@ -635,6 +636,7 @@ class _MainScreen extends State<MainScreen> with TickerProviderStateMixin {
             left: 0.0,
             right: 0.0,
             child: AnimatedSize(
+              // ignore: deprecated_member_use
               vsync: this,
               curve: Curves.bounceIn,
               duration: new Duration(milliseconds: 160),
@@ -677,15 +679,15 @@ class _MainScreen extends State<MainScreen> with TickerProviderStateMixin {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    "Car",
+                                    "Fiacre Go",
                                     style: TextStyle(
                                         fontSize: 18.0,
                                         fontFamily: "Brand-Bold"),
                                   ),
                                   Text(
                                     (((tripDirectionDetails != null)
-                                        ? tripDirectionDetails.distanceText
-                                        : "Error")),
+                                        ? '${(tripDirectionDetails.distanceValue) / 1000} KM'
+                                        : 'N/A')),
                                     style: TextStyle(
                                         fontSize: 16.0, color: Colors.grey),
                                   ),
@@ -881,7 +883,11 @@ class _MainScreen extends State<MainScreen> with TickerProviderStateMixin {
     });
     Navigator.pop(context);
     print("THis is encoded Points :: ");
-    print(details.encodedPoints);
+    print(details!.encodedPoints);
+    print(details.distanceText);
+    print(details.distanceValue);
+    print(details.durationText);
+    print(details.durationValue);
 
     PolylinePoints polylinePoints = PolylinePoints();
     List<PointLatLng> decodePolyLinePointsResult =
@@ -910,7 +916,7 @@ class _MainScreen extends State<MainScreen> with TickerProviderStateMixin {
       );
       polylineSet.add(polyline);
     });
-    LatLngBounds latLngBounds;
+    var latLngBounds;
     if (pickUpLatLng.latitude > dropOffLatLng.latitude &&
         pickUpLatLng.longitude > dropOffLatLng.longitude) {
       latLngBounds =
@@ -926,50 +932,50 @@ class _MainScreen extends State<MainScreen> with TickerProviderStateMixin {
     } else {
       latLngBounds =
           LatLngBounds(southwest: pickUpLatLng, northeast: dropOffLatLng);
-      newGoogleMapController.animateCamera(
-        CameraUpdate.newLatLngBounds(latLngBounds, 70),
-      );
-      Marker pickUpLocMarker = Marker(
-        icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueGreen),
-        infoWindow:
-            InfoWindow(title: initialPos.placeName, snippet: "my Location"),
-        position: pickUpLatLng,
-        markerId: MarkerId("pickUpId"),
-      );
-
-      Marker dropOffLocMarker = Marker(
-        icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueRed),
-        infoWindow:
-            InfoWindow(title: finalPos.placeName, snippet: "Drop-Off Location"),
-        position: dropOffLatLng,
-        markerId: MarkerId("dropOffId"),
-      );
-      setState(() {
-        markersSet.add(pickUpLocMarker);
-        markersSet.add(dropOffLocMarker);
-      });
-
-      Circle pickUpCirlce = Circle(
-        fillColor: Colors.yellow,
-        center: pickUpLatLng,
-        radius: 12,
-        strokeColor: Colors.yellowAccent,
-        circleId: CircleId("pickUpId"),
-      );
-
-      Circle dropOffCirlce = Circle(
-        fillColor: Colors.red,
-        center: pickUpLatLng,
-        radius: 12,
-        strokeColor: Colors.red,
-        circleId: CircleId("dropOffId"),
-      );
-
-      setState(() {
-        circlesSet.add(pickUpCirlce);
-        circlesSet.add(dropOffCirlce);
-      });
     }
+    newGoogleMapController.animateCamera(
+      CameraUpdate.newLatLngBounds(latLngBounds, 70),
+    );
+    Marker pickUpLocMarker = Marker(
+      icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueGreen),
+      infoWindow:
+          InfoWindow(title: initialPos.placeName, snippet: "my Location"),
+      position: pickUpLatLng,
+      markerId: MarkerId("pickUpId"),
+    );
+
+    Marker dropOffLocMarker = Marker(
+      icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueRed),
+      infoWindow:
+          InfoWindow(title: finalPos.placeName, snippet: "Drop-Off Location"),
+      position: dropOffLatLng,
+      markerId: MarkerId("dropOffId"),
+    );
+    setState(() {
+      markersSet.add(pickUpLocMarker);
+      markersSet.add(dropOffLocMarker);
+    });
+
+    Circle pickUpCirlce = Circle(
+      fillColor: Colors.yellow,
+      center: pickUpLatLng,
+      radius: 12,
+      strokeColor: Colors.yellowAccent,
+      circleId: CircleId("pickUpId"),
+    );
+
+    Circle dropOffCirlce = Circle(
+      fillColor: Colors.red,
+      center: pickUpLatLng,
+      radius: 12,
+      strokeColor: Colors.red,
+      circleId: CircleId("dropOffId"),
+    );
+
+    setState(() {
+      circlesSet.add(pickUpCirlce);
+      circlesSet.add(dropOffCirlce);
+    });
   }
 
   void intitGeoFireListner() {
