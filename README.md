@@ -16,11 +16,11 @@ Star⭐ the repo if you like what you see😉.
 
 ## **📸 ScreenShots**
 -----
-![Login Screen ]()
+![Login Screen ](https://github.com/MathabatheTokelo/Rider-App/blob/master/samples/1.png)
 
 
 
-![Registration Screen]()
+![Registration Screen](https://github.com/MathabatheTokelo/Rider-App/blob/master/samples/2.png)
 
 
 ![Main Screen]()
