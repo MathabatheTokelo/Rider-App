@@ -23,7 +23,7 @@ Star⭐ the repo if you like what you see😉.
 ![Registration Screen](https://github.com/MathabatheTokelo/Rider-App/blob/master/samples/2.png)
 
 
-![Main Screen]()
+![Main Screen](https://github.com/MathabatheTokelo/Rider-App/blob/master/samples/3.png)
 
 
 ![]()
