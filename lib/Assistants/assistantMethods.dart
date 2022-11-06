@@ -7,6 +7,7 @@ import 'package:final_year_project_rider_app/DataHandler/appData.dart';
 import 'package:final_year_project_rider_app/configMaps.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
+
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
@@ -76,11 +77,12 @@ class AssistantMethods {
     return localAmount.truncate();
   }
 
+  // async methods should return a future
   static Future<void> getCurrentOnLineUserInfo() async {
     firebaseUser = await FirebaseAuth.instance.currentUser;
-    var userId = firebaseUser!.uid;
+    String userId = firebaseUser!.uid;
     DatabaseReference reference =
-        FirebaseDatabase.instance.ref().child("user").child(userId!);
+        FirebaseDatabase.instance.ref().child("user").child(userId);
 
     final snapshot =
         await reference.get(); // you should use await on async methods

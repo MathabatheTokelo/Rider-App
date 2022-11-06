@@ -77,33 +77,41 @@ class _MainScreen extends State<MainScreen> with TickerProviderStateMixin {
   }
 
   void saveRideRequest() {
+    print("Not  DOneeeee");
+
     rideRequestReference =
-        // ignore: deprecated_member_use
-        FirebaseDatabase.instance.reference().child("Ride Request");
+        FirebaseDatabase.instance.ref().child("Ride Request").push();
+    print("DOneeeee");
     var pickUp = Provider.of<AppData>(context, listen: false).pickUpLocation;
     var dropOff = Provider.of<AppData>(context, listen: false).dropOffLocation;
+    print(dropOff);
+    print(dropOff.longitude);
+    print(dropOff.latitude);
     Map pickUpLocationMap = {
       "latitude": pickUp.latitude.toString(),
       "longitudde": pickUp.longitude.toString(),
     };
+    print("DOneeeee");
 
     Map dropOffLocationMap = {
-      "latitude": dropOff.latitude.toString(),
-      "longitudde": dropOff.longitude.toString(),
+      "latitudee": dropOff.latitude.toString(),
+      "longitude": dropOff.longitude.toString(),
     };
-
+    print("DOneeeee");
     Map rideInfoMap = {
       "driver_id": "waiting",
       "payment_method": "cash",
-      "pickup": pickUpLocationMap,
-      "dropOff": dropOffLocationMap,
+      "pickup": pickUp,
+      // "dropOff": dropOffLocationMap,
       "created_at": DateTime.now().toString(),
       "rider_name": userCurrentInfo!.name,
       "rider_phone": userCurrentInfo!.phone,
-      "pickup_address": pickUp.placeName,
-      "dropoff address": dropOff.placeName,
+      "pickup_address": pickUp!.placeName,
+      "dropoff address": dropOff!.placeName,
     };
+    print("DOneeeee");
     rideRequestReference.push().set(rideInfoMap);
+    print("DOneeeee");
   }
 
   void cancelRideRequest() {
@@ -123,7 +131,7 @@ class _MainScreen extends State<MainScreen> with TickerProviderStateMixin {
   resetApp() async {
     setState(() {
       drawerOpen = true;
-      searchContainerHeight = 0;
+      searchContainerHeight = 300;
       rideDetailsContainerHeight = 0;
       requestRideContainerHeight = 0;
       bottomPaddingOfMap = 230.0;
